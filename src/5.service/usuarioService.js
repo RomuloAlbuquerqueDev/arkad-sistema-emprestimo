@@ -5,7 +5,6 @@ import UsuarioDTO from "../3.dto/usuarioDTO.js";
 import Usuario from "../2.entity/usuario.js";
 
 const usuarioRepository = new UsuarioRepository();
-const carteiraRepository = new CarteiraRepository();
 
 class UsuarioService{
     

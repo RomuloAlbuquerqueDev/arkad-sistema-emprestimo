@@ -9,7 +9,7 @@ class Carteira{
     }
 
     depositar(valor){
-        this.saldo += valor;
+        this.saldo += Number(valor);
     }
 }
 

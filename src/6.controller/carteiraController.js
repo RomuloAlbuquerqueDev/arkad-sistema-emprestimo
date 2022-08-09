@@ -8,7 +8,7 @@ class CarteiraController{
         try{
             const valor = req.body.valor;
             const cpf = req.body.cpf;
-            const extrato = await carteiraService.depositar(valor, cpf);
+            const extrato = await carteiraService.depositar(parseFloat(valor), cpf);
             res.status(200).json({"Extrato": extrato});
         }catch(error){
             console.log(error);
