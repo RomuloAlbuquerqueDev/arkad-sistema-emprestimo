@@ -12,7 +12,7 @@ class EmprestimoService{
     async emprestar(valor, quantParcelas, cpf){
         const emprestimo = await emprestimoRepository.emprestar(Number(valor), Number(quantParcelas), cpf);
         const [{carteira_saldo}] = await carteiraRepository.buscarCarteira(cpf);
-        const [{usuario_nome}] = await usuarioRepository.buscarUsuario(cpf);
+        const [{usuario_nome}] = await usuarioRepository.buscar(cpf);
         const emprestimoDTO = new ExtratoEmprestimoDTO(usuario_nome, emprestimo.cpf, emprestimo.valorEmprestado, emprestimo.quantParcelas, emprestimo.valorParcela, emprestimo.totalPagar, emprestimo.totalJuros, emprestimo.taxaJurosMensal, Number(carteira_saldo));
         return emprestimoDTO;
         try{
