@@ -14,33 +14,37 @@ class Extrato{
     }
 
     calcular(valor, quantParcelas){
-        const array = [parseInt(quantParcelas)];
-        let valorxparcela = parseFloat(valor)/quantParcelas;
-        let totaljuros = 0;
-        let totalpagar = 0;
-        let valorparcela = 0;
-
-        for(let i = 0;  i < parseInt(quantParcelas); i++){
-            while(parseFloat(valor) >= valorxparcela){
-                totaljuros += (parseFloat(valor)*0.10); 
-                totalpagar = parseFloat(valor) + totaljuros;
-                valorparcela = totalpagar/parseInt(quantParcelas);
-                array[i] = totalpagar;
-                valor -= (parseFloat(valor)/parseInt(quantParcelas));
-            }
-            console.log(valor)
+        let valorInicial = valor;
+        let valorEmprestado = valor;
+        const taxa = 10;
+        const parcelas = quantParcelas;
+        const baseParcelaSemTaxa = valorEmprestado/parcelas;
+        let parcelaAPagarComTaxa = 0;
+        let taxaDoValorEmprestado = 0;
+        let valorFinalParcelaFixa = 0;
+        let valorTotalFinalPagar = 0;
+        let valorFinalTotalJuros = 0;
+    
+        for(let i=0; i<parcelas; i++){
+            taxaDoValorEmprestado = valorEmprestado*taxa/100;
+            valorFinalTotalJuros += taxaDoValorEmprestado;
+            parcelaAPagarComTaxa = taxaDoValorEmprestado+baseParcelaSemTaxa;
+            valorEmprestado -= baseParcelaSemTaxa;
+            valorTotalFinalPagar = valorInicial + valorFinalTotalJuros;
+            valorFinalParcelaFixa = valorTotalFinalPagar/parcelas;
         }
-        this.totalPagar = totalpagar;
-        this.valorParcela = valorparcela;
-        this.totalJuros = totaljuros;
+
+        this.totalPagar = valorTotalFinalPagar;
+        this.valorParcela = valorFinalParcelaFixa;
+        this.totalJuros = valorFinalTotalJuros;
     }
 
     gerarParcela(cpf, valorParcela, dataEmprestimo, quantParcelas){
         const parcelas = [parseInt(quantParcelas)];
         let dataVencimento = parseInt(dataEmprestimo);
-        for(let i=1; i<parseInt(quantParcelas); i++){
+        for(let i=0; i<parseInt(quantParcelas); i++){
             dataVencimento += 30;
-            const numeroParcela=i;
+            const numeroParcela=i+1;
             parcelas[i] = new Parcela(cpf, parseInt(valorParcela), dataEmprestimo, dataVencimento, numeroParcela, quantParcelas);
         }
         return parcelas;

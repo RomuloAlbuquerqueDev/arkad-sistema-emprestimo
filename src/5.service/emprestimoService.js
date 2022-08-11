@@ -14,7 +14,7 @@ class EmprestimoService{
         const [{carteira_saldo}] = await carteiraRepository.buscar(cpf);
         const saldo = parseFloat(carteira_saldo)
         const [{usuario_nome}] = await usuarioRepository.buscar(cpf);
-        const emprestimoDTO = new ExtratoEmprestimoDTO(usuario_nome, emprestimo.cpf, emprestimo.valorEmprestado, emprestimo.quantParcelas, emprestimo.valorParcela, emprestimo.totalPagar, emprestimo.totalJuros, emprestimo.taxaJurosMensal, saldo);
+        const emprestimoDTO = new ExtratoEmprestimoDTO(usuario_nome, emprestimo.cpf, emprestimo.valorEmprestado, emprestimo.quantParcelas, emprestimo.valorParcela, emprestimo.totalPagar, emprestimo.totalJuros, emprestimo.taxaJurosMensal, saldo, emprestimo.parcelas);
         return emprestimoDTO;
         try{
 
