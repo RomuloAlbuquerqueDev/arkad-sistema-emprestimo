@@ -9,7 +9,7 @@ class EmprestimoController{
             const valor = parseFloat(req.body.valor);
             const quantParcelas = parseInt(req.body.quantParcelas);
             const cpf = req.body.cpf;
-            const demonstrativo = await emprestimoService.emprestar(valor, quantParcelas, cpf);
+            const demonstrativo = await emprestimoService.emprestar(parseFloat(valor), parseInt(quantParcelas), cpf);
             res.status(200).json({"Demonstrativo": demonstrativo});
         }catch(error){
             console.log(error)

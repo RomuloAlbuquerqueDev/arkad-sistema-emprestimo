@@ -6,7 +6,7 @@ const configBanco = new ConfigBanco();
 
 class CarteiraRepository{
 
-    async buscarCarteira(cpf){
+    async buscar(cpf){
         return await configBanco.banco.query(`
             select * from carteira where carteira_cpf = $1
         `,
@@ -27,9 +27,15 @@ class CarteiraRepository{
     // }
 
     async depositar(valor, cpf){
+        const [{carteira_saldo}] = await configBanco.banco.query(
+            `select carteira_saldo from carteira where carteira_cpf = $1`,
+            {bind: [cpf], type: QueryTypes.SELECT}
+        );
+        valor += Number(carteira_saldo);
         const deposito = await configBanco.banco.query(
             `update carteira set carteira_saldo = $1 where carteira_cpf = $2 returning *`,
-        {bind: [valor, cpf], type: QueryTypes.UPDATE});
+        {bind: [valor, cpf], type: QueryTypes.UPDATE}
+        );
         return deposito;
     }
 
