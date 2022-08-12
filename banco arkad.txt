@@ -1,0 +1,119 @@
+-- Table: public.carteira
+
+-- DROP TABLE IF EXISTS public.carteira;
+
+CREATE TABLE IF NOT EXISTS public.carteira
+(
+    carteira_id bigint NOT NULL DEFAULT nextval('carteira_carteira_id_seq'::regclass),
+    carteira_cpf character varying(11) COLLATE pg_catalog."default",
+    carteira_saldo numeric,
+    CONSTRAINT carteira_pkey PRIMARY KEY (carteira_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.carteira
+    OWNER to postgres;
+
+
+
+-- Table: public.emprestimo
+
+-- DROP TABLE IF EXISTS public.emprestimo;
+
+CREATE TABLE IF NOT EXISTS public.emprestimo
+(
+    emprestimo_id bigint NOT NULL DEFAULT nextval('emprestimo_emprestimo_id_seq'::regclass),
+    emprestimo_cpf character varying(11) COLLATE pg_catalog."default",
+    emprestimo_valor numeric,
+    emprestimo_quant_parcelas integer,
+    carteira_id bigint NOT NULL DEFAULT nextval('emprestimo_carteira_id_seq'::regclass),
+    CONSTRAINT emprestimo_pkey PRIMARY KEY (emprestimo_id),
+    CONSTRAINT emprestimo_carteira_id_fkey FOREIGN KEY (carteira_id)
+        REFERENCES public.carteira (carteira_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.emprestimo
+    OWNER to postgres;
+
+
+-- Table: public.extrato
+
+-- DROP TABLE IF EXISTS public.extrato;
+
+CREATE TABLE IF NOT EXISTS public.extrato
+(
+    extrato_id bigint NOT NULL DEFAULT nextval('extrato_extrato_id_seq'::regclass),
+    extrato_cpf character varying(11) COLLATE pg_catalog."default",
+    extrato_total_pagar numeric,
+    extrato_quant_parcelas integer,
+    extrato_valor_parcela numeric,
+    extrato_valor_emprestado numeric,
+    extrato_total_juros numeric,
+    extrato_taxa_juros_mensal numeric,
+    emprestimo_id bigint NOT NULL DEFAULT nextval('extrato_emprestimo_id_seq'::regclass),
+    CONSTRAINT extrato_pkey PRIMARY KEY (extrato_id),
+    CONSTRAINT extrato_emprestimo_id_fkey FOREIGN KEY (emprestimo_id)
+        REFERENCES public.emprestimo (emprestimo_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.extrato
+    OWNER to postgres;
+
+
+
+
+-- Table: public.parcela
+
+-- DROP TABLE IF EXISTS public.parcela;
+
+CREATE TABLE IF NOT EXISTS public.parcela
+(
+    parcela_id bigint NOT NULL DEFAULT nextval('parcela_parcela_id_seq'::regclass),
+    parcela_cpf character varying(11) COLLATE pg_catalog."default",
+    valor_parcela numeric,
+    data_emprestimo character varying(10) COLLATE pg_catalog."default",
+    data_vencimento character varying(10) COLLATE pg_catalog."default",
+    numero_parcela integer,
+    quant_parcelas integer,
+    emprestimo_id bigint NOT NULL DEFAULT nextval('parcela_emprestimo_id_seq'::regclass),
+    CONSTRAINT parcela_pkey PRIMARY KEY (parcela_id),
+    CONSTRAINT parcela_emprestimo_id_fkey FOREIGN KEY (emprestimo_id)
+        REFERENCES public.emprestimo (emprestimo_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.parcela
+    OWNER to postgres;
+
+
+
+
+-- Table: public.usuario
+
+-- DROP TABLE IF EXISTS public.usuario;
+
+CREATE TABLE IF NOT EXISTS public.usuario
+(
+    usuario_id bigint NOT NULL DEFAULT nextval('usuario_usuario_id_seq'::regclass),
+    usuario_nome character varying(255) COLLATE pg_catalog."default",
+    usuario_cpf character varying(11) COLLATE pg_catalog."default",
+    usuario_endereco character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT usuario_pkey PRIMARY KEY (usuario_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.usuario
+    OWNER to postgres;
