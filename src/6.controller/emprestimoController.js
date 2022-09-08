@@ -27,6 +27,17 @@ class EmprestimoController{
             return res.status(500).json({"mensagem": "Erro Interno do Servidor", error})
         }
     }
+
+    listarParcelas = async (req, res) =>{ 
+        try{
+            const emprestimoId = req.params.emprestimo_id;
+            const listaParcelas = await emprestimoService.listarParcelas(emprestimoId);
+            res.status(200).json({"Parcelas": listaParcelas});
+        }catch(error){
+            console.log(error);
+            return res.status(500).json({"mensagem": "Erro Interno do Servidor", error})
+        }
+    }
 }
 
 export default EmprestimoController;

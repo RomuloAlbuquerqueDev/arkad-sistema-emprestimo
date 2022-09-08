@@ -11,7 +11,7 @@ class CarteiraService{
         try{
             const [[{carteira_cpf, carteira_saldo}]] = await carteiraRepository.depositar(Number(valor), cpf);
             const saldo = parseFloat(carteira_saldo)
-            const [{usuario_cpf, usuario_nome}] = await usuarioRepository.buscar(carteira_cpf);
+            const [{usuario_cpf, usuario_nome}] = await usuarioRepository.buscarPorCPF(carteira_cpf);
             const extratoCarteiraDTO = new ExtratoCarteiraDTO(usuario_nome, usuario_cpf, valor, saldo);
             return extratoCarteiraDTO;
         }catch(e){

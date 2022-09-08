@@ -7,6 +7,7 @@ class EmprestimoRoteador{
         this.emprestimoController = new EmprestimoController();
         this.rota.post('/emprestar', this.emprestimoController.emprestar);
         this.rota.get('/listar/:cpf', this.emprestimoController.listarEmprestimos);
+        this.rota.get('/parcelas/:emprestimo_id', this.emprestimoController.listarParcelas);
     }
 }
 

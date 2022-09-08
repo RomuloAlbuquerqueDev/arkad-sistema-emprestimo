@@ -14,7 +14,6 @@ class EmprestimoRepository{
             {bind: [cpf],
             type: QueryTypes.SELECT}
         );
-        console.log("::::::::::",carteira_id);
         const emprestimo = new Extrato(parseFloat(valor), parseInt(quantParcelas), cpf);
         const [[{emprestimo_id}]] = await configBanco.banco.query(
             `insert into emprestimo(emprestimo_cpf, emprestimo_valor, emprestimo_quant_parcelas, carteira_id) values($1, $2, $3, $4) returning emprestimo_id`,
@@ -43,5 +42,9 @@ class EmprestimoRepository{
         {bind: [cpf], type: QueryTypes.SELECT});
         return extratos;
     }
+
+    listarParcelas = async (emprestimoId) =>
+        await configBanco.banco.query(`select * from parcela where emprestimo_id = $1`,
+        {bind: [emprestimoId], type: QueryTypes.SELECT});
 }
 export default EmprestimoRepository;

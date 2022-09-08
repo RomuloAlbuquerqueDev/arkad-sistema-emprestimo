@@ -6,7 +6,7 @@ const configBanco = new ConfigBanco();
 
 class CarteiraRepository{
 
-    async buscar(cpf){
+    async buscarPorCPF(cpf){
         return await configBanco.banco.query(`
             select * from carteira where carteira_cpf = $1
         `,
