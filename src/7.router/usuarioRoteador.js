@@ -6,7 +6,8 @@ class UsuarioRoteador{
         this.rota = new Router();
         this.usuarioController = new UsuarioController();
         this.rota.post('/cadastrar', this.usuarioController.salvar);
-        this.rota.get('/buscar/:cpf', this.usuarioController.buscar);    
+        this.rota.get('/buscarPorCPF/:cpf', this.usuarioController.buscarPorCPF);   
+        this.rota.get('/buscarTodos', this.usuarioController.buscarTodos); 
     }
 }
 

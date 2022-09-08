@@ -15,11 +15,20 @@ class Repository{
         return newUsuario; 
     }
 
-    async buscar(cpf){
+    async buscarPorCPF(cpf){
         const usuario = await configBanco.banco.query(`select * from usuario where usuario_cpf = $1`,
         {bind: [cpf], type: QueryTypes.SELECT});
         return usuario;
     }
-}
+    async buscarTodos(){
+        const usuario = await configBanco.banco.query(`select * from usuario`,
+        {bind: [], type: QueryTypes.SELECT});
+        return usuario;
+    }
+
+    seJaExisteCPF = async cpf =>
+        await configBanco.banco.query(`select * from usuario where usuario_cpf = $1`,
+        {bind: [cpf], type: QueryTypes.SELECT})
+    } 
 
 export default Repository;

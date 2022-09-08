@@ -20,10 +20,21 @@ class UsuarioController{
         }
     }
 
-    async buscar(req, res){
+    async buscarPorCPF(req, res){
         try{
             const cpf = req.params.cpf;
-            const usuario = await usuarioService.buscar(cpf);
+            const usuario = await usuarioService.buscarPorCPF(cpf);
+            res.status(200).json(usuario);
+        }
+        catch(error){
+            console.log(error);
+            return res.status(500).json({"mensagem": "Erro Interno do Servidor", error});
+        }
+    }
+
+    async buscarTodos(req, res){
+        try{
+            const usuario = await usuarioService.buscarTodos();
             res.status(200).json(usuario);
         }
         catch(error){
