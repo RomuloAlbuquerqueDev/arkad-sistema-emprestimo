@@ -12,7 +12,7 @@ class UsuarioService{
     async salvar(nome, cpf, endereco){
         try{
             const usuarioEncontrado = await usuarioRepository.seJaExisteCPF(cpf);
-            if(usuarioEncontrado){
+            if(usuarioEncontrado.length !== 0){
                 return "CPF já existe";
             }else{
                 const usuario = new Usuario(nome, cpf, endereco);

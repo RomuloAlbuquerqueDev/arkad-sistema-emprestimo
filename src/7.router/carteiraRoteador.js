@@ -6,8 +6,7 @@ class CarteiraRoteador{
         this.rota = new Router();
         this.carteiraController = new CarteiraController();
         this.rota.post('/depositar', this.carteiraController.depositar);
-        // this.rota.post('/emprestar', this.carteiraController.emprestar);
-        // this.rota.get('/listaremprestimos/:cpf', this.carteiraController.listarEmprestimos);
+        this.rota.post('/pagarparcela', this.carteiraController.pagarParcela);
     }
 }
 

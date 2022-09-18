@@ -18,6 +18,15 @@ class CarteiraService{
             return null;
         }
     }
+
+    pagarParcela = async (cpf, valor, parcelaId) =>{
+        const result = await carteiraRepository.buscarPagamento(cpf, valor, parcelaId)    
+        if(result.length === 0){
+            console.log("::::::::::::::::::",result)
+        }else{
+            return await carteiraRepository.pagarParcela(cpf, valor, parcelaId);
+        }
+    }   
 }
 
 export default CarteiraService;

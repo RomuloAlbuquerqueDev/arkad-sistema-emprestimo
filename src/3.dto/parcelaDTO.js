@@ -1,5 +1,6 @@
 class ParcelaDTO{
-    constructor(cpf, valorParcela, dataEmprestimo, dataVencimento, numeroParcela, quantParcelas){
+    constructor(id, cpf, valorParcela, dataEmprestimo, dataVencimento, numeroParcela, quantParcelas){
+        this.parcela_id = id;
         this.cpf = cpf;
         this.valorParcela = valorParcela;
         this.dataEmprestimo = dataEmprestimo;
